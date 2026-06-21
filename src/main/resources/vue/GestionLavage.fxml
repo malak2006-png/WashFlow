@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controleur.GestionLavageController"
+            styleClass="root" prefWidth="1200" prefHeight="750">
+
+    <top>
+        <HBox styleClass="menu-bar" alignment="CENTER_LEFT">
+            <MenuBar styleClass="menu-bar" HBox.hgrow="ALWAYS">
+                <Menu text="Gestion">
+                    <MenuItem text="Véhicules" onAction="#handleAllerVehicules"/>
+                    <MenuItem text="Lavages" onAction="#handleAllerLavages"/>
+                </Menu>
+                <Menu text="Statistiques">
+                    <MenuItem text="Tableau de bord" onAction="#handleAllerDashboard"/>
+                </Menu>
+                <Menu text="Aide">
+                    <MenuItem text="À propos" onAction="#handleAPropos"/>
+                </Menu>
+            </MenuBar>
+            <Button text="✕" styleClass="btn-quitter" onAction="#handleQuitter"/>
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.35">
+
+            <!-- ===== PANNEAU GAUCHE : FORMULAIRE ===== -->
+            <ScrollPane fitToWidth="true" styleClass="root">
+                <VBox spacing="16">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Gestion des Lavages" styleClass="titre-principal"/>
+                    <Label text="Gérez et suivez les opérations de lavage" styleClass="sous-titre"/>
+
+                    <Accordion>
+                        <panes>
+                            <TitledPane text="Informations du Lavage" expanded="true">
+                                <VBox spacing="12">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <VBox spacing="4">
+                                        <Label text="Immatriculation" styleClass="label-champ"/>
+                                        <ComboBox fx:id="vehiculeComboBox" maxWidth="Infinity"
+                                                  promptText="Sélectionner un véhicule...">
+                                            <tooltip>
+                                                <Tooltip text="Choisissez le véhicule concerné par ce lavage"/>
+                                            </tooltip>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Type de Lavage" styleClass="label-champ"/>
+                                        <ComboBox fx:id="typeLavageComboBox" maxWidth="Infinity"
+                                                  promptText="Choisir un type...">
+                                            <tooltip>
+                                                <Tooltip text="Basic, Premium ou Complet"/>
+                                            </tooltip>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Date du Lavage" styleClass="label-champ"/>
+                                        <DatePicker fx:id="dateLavagePicker" maxWidth="Infinity"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Durée (minutes)" styleClass="label-champ"/>
+                                        <HBox spacing="10" alignment="CENTER_LEFT">
+                                            <Slider fx:id="dureeSlider" min="10" max="120" value="30"
+                                                    HBox.hgrow="ALWAYS">
+                                                <tooltip>
+                                                    <Tooltip text="Durée estimée du lavage en minutes"/>
+                                                </tooltip>
+                                            </Slider>
+                                            <Label fx:id="dureeValueLabel" text="30 min" styleClass="label-blanc"/>
+                                        </HBox>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Prix (MAD)" styleClass="label-champ"/>
+                                        <TextField fx:id="prixField" promptText="0.00"/>
+                                    </VBox>
+
+                                    <CheckBox fx:id="payeCheckBox" text="Payé ✓"/>
+                                </VBox>
+                            </TitledPane>
+
+                            <TitledPane text="Détails Supplémentaires" expanded="false">
+                                <VBox spacing="12">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <VBox spacing="4">
+                                        <Label text="État" styleClass="label-champ"/>
+                                        <ComboBox fx:id="etatComboBox" maxWidth="Infinity"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Employé responsable" styleClass="label-champ"/>
+                                        <TextField fx:id="employeField" promptText="Nom de l'employé"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Remarques" styleClass="label-champ"/>
+                                        <TextArea fx:id="remarquesArea" prefRowCount="3" wrapText="true"/>
+                                    </VBox>
+                                </VBox>
+                            </TitledPane>
+                        </panes>
+                    </Accordion>
+
+                    <Label fx:id="messageLabel" styleClass="message-erreur" wrapText="true"/>
+
+                    <HBox spacing="10">
+                        <Button text="+ Ajouter" styleClass="btn-ajouter" onAction="#handleAjouter"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="✎ Modifier" styleClass="btn-modifier" onAction="#handleModifier"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                    <HBox spacing="10">
+                        <Button text="🗑 Supprimer" styleClass="btn-supprimer" onAction="#handleSupprimer"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="⟳ Actualiser" styleClass="btn-actualiser" onAction="#handleActualiser"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+
+            <!-- ===== PANNEAU DROIT : RECHERCHE + TABLEAU ===== -->
+            <VBox spacing="14" styleClass="root">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="rechercheField" promptText="🔍 Rechercher un lavage..."
+                               HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="filtreEtatComboBox" promptText="Tous les états"/>
+                    <Label fx:id="resultatsLabel" text="0 résultats" styleClass="sous-titre"/>
+                </HBox>
+
+                <TableView fx:id="lavageTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                        <TableColumn fx:id="colVehicule" text="Véhicule" prefWidth="110"/>
+                        <TableColumn fx:id="colType" text="Type" prefWidth="90"/>
+                        <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+                        <TableColumn fx:id="colDuree" text="Durée" prefWidth="70"/>
+                        <TableColumn fx:id="colPrix" text="Prix" prefWidth="80"/>
+                        <TableColumn fx:id="colEtat" text="État" prefWidth="100"/>
+                        <TableColumn fx:id="colPaye" text="Payé" prefWidth="60"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Label fx:id="totalLavagesLabel" text="Total lavages: 0" styleClass="label-blanc"/>
+                    <Label fx:id="termineLabel" text="Terminés: 0" styleClass="message-succes"/>
+                    <Label fx:id="enCoursLabel" text="En cours: 0" styleClass="label-blanc"/>
+                    <Label fx:id="revenuLabel" text="Revenus: 0 MAD" styleClass="label-blanc"/>
+                </HBox>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

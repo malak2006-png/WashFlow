@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controleur.GestionVehiculeController"
+            styleClass="root" prefWidth="1200" prefHeight="750">
+
+    <!-- ===== Barre du haut : MenuBar + bouton Quitter (X) ===== -->
+    <top>
+        <HBox styleClass="menu-bar" alignment="CENTER_LEFT">
+            <MenuBar styleClass="menu-bar" HBox.hgrow="ALWAYS">
+                <Menu text="Gestion">
+                    <MenuItem text="Véhicules" onAction="#handleAllerVehicules"/>
+                    <MenuItem text="Lavages" onAction="#handleAllerLavages"/>
+                </Menu>
+                <Menu text="Statistiques">
+                    <MenuItem text="Tableau de bord" onAction="#handleAllerDashboard"/>
+                </Menu>
+                <Menu text="Aide">
+                    <MenuItem text="À propos" onAction="#handleAPropos"/>
+                </Menu>
+            </MenuBar>
+            <Button text="✕" styleClass="btn-quitter" onAction="#handleQuitter"/>
+        </HBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.4">
+
+            <!-- ===== PANNEAU GAUCHE : FORMULAIRE ===== -->
+            <ScrollPane fitToWidth="true" styleClass="root">
+                <VBox spacing="16">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Gestion des Véhicules" styleClass="titre-principal"/>
+
+                    <Accordion>
+                        <panes>
+                            <TitledPane text="Informations Générales" expanded="true">
+                                <VBox spacing="12">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <VBox spacing="4">
+                                        <Label text="Immatriculation" styleClass="label-champ"/>
+                                        <TextField fx:id="immatriculationField" promptText="AB-123-CD">
+                                            <tooltip>
+                                                <Tooltip text="Plaque d'immatriculation du véhicule"/>
+                                            </tooltip>
+                                        </TextField>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Marque" styleClass="label-champ"/>
+                                        <TextField fx:id="marqueField" promptText="Peugeot"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Modèle" styleClass="label-champ"/>
+                                        <TextField fx:id="modeleField" promptText="308"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Couleur" styleClass="label-champ"/>
+                                        <TextField fx:id="couleurField" promptText="Noir"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Type" styleClass="label-champ"/>
+                                        <ComboBox fx:id="typeComboBox" maxWidth="Infinity"
+                                                  promptText="Sélectionner un type">
+                                            <tooltip>
+                                                <Tooltip text="Berline, SUV, Camion, Moto"/>
+                                            </tooltip>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Date d'enregistrement" styleClass="label-champ"/>
+                                        <DatePicker fx:id="dateEnregistrementPicker" maxWidth="Infinity"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Nombre de lavages" styleClass="label-champ"/>
+                                        <Spinner fx:id="nombreLavagesSpinner" editable="true" maxWidth="Infinity"/>
+                                    </VBox>
+                                </VBox>
+                            </TitledPane>
+
+                            <TitledPane text="Détails" expanded="false">
+                                <VBox spacing="12">
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10"/>
+                                    </padding>
+
+                                    <Label text="Propriétaire du véhicule" styleClass="label-champ"/>
+
+                                    <VBox spacing="4">
+                                        <Label text="Nom" styleClass="label-champ"/>
+                                        <TextField fx:id="nomProprietaireField" promptText="Alami">
+                                            <tooltip>
+                                                <Tooltip text="Nom de famille du propriétaire"/>
+                                            </tooltip>
+                                        </TextField>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Prénom" styleClass="label-champ"/>
+                                        <TextField fx:id="prenomProprietaireField" promptText="Karim"/>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Téléphone" styleClass="label-champ"/>
+                                        <TextField fx:id="telephoneProprietaireField" promptText="0661234567">
+                                            <tooltip>
+                                                <Tooltip text="Numéro de téléphone du propriétaire"/>
+                                            </tooltip>
+                                        </TextField>
+                                    </VBox>
+
+                                    <HBox spacing="20">
+                                        <fx:define>
+                                            <ToggleGroup fx:id="proprietaireToggleGroup"/>
+                                        </fx:define>
+                                        <RadioButton fx:id="particulierRadio" text="Particulier"
+                                                      toggleGroup="$proprietaireToggleGroup" selected="true"/>
+                                        <RadioButton fx:id="professionnelRadio" text="Professionnel"
+                                                      toggleGroup="$proprietaireToggleGroup"/>
+                                    </HBox>
+
+                                    <CheckBox fx:id="actifCheckBox" text="Véhicule actif" selected="true"/>
+
+                                    <VBox spacing="4">
+                                        <Label text="Remise (%)" styleClass="label-champ"/>
+                                        <HBox spacing="10" alignment="CENTER_LEFT">
+                                            <Slider fx:id="remiseSlider" min="0" max="50" value="0"
+                                                    HBox.hgrow="ALWAYS">
+                                                <tooltip>
+                                                    <Tooltip text="Pourcentage de remise pour ce client"/>
+                                                </tooltip>
+                                            </Slider>
+                                            <Label fx:id="remiseValueLabel" text="0%" styleClass="label-blanc"/>
+                                        </HBox>
+                                    </VBox>
+
+                                    <VBox spacing="4">
+                                        <Label text="Remarques" styleClass="label-champ"/>
+                                        <TextArea fx:id="remarquesArea" prefRowCount="3" wrapText="true"
+                                                  promptText="Observations sur le véhicule..."/>
+                                    </VBox>
+                                </VBox>
+                            </TitledPane>
+                        </panes>
+                    </Accordion>
+
+                    <ProgressBar fx:id="progressBar" maxWidth="Infinity" visible="false"/>
+
+                    <HBox spacing="10">
+                        <Button text="+ Ajouter" styleClass="btn-ajouter" onAction="#handleAjouter"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="✎ Modifier" styleClass="btn-modifier" onAction="#handleModifier"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                    <HBox spacing="10">
+                        <Button text="🗑 Supprimer" styleClass="btn-supprimer" onAction="#handleSupprimer"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="⟳ Actualiser" styleClass="btn-actualiser" onAction="#handleActualiser"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+
+            <!-- ===== PANNEAU DROIT : RECHERCHE + LISTE + TABLEAU ===== -->
+            <VBox spacing="14" styleClass="root">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="rechercheField" promptText="🔍 Rechercher un véhicule..."
+                               HBox.hgrow="ALWAYS"/>
+                    <ComboBox fx:id="filtreTypeComboBox" promptText="Tous les types"/>
+                </HBox>
+
+                <Label text="Véhicules récents" styleClass="label-champ"/>
+                <ListView fx:id="vehiculesListView" prefHeight="120"/>
+
+                <Label text="Tableau récapitulatif" styleClass="label-champ"/>
+                <TableView fx:id="vehiculeTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+                        <TableColumn fx:id="colImmat" text="Immatriculation" prefWidth="130"/>
+                        <TableColumn fx:id="colMarque" text="Marque" prefWidth="100"/>
+                        <TableColumn fx:id="colType" text="Type" prefWidth="90"/>
+                        <TableColumn fx:id="colProprietaire" text="Propriétaire" prefWidth="110"/>
+                        <TableColumn fx:id="colTelephone" text="Téléphone" prefWidth="100"/>
+                        <TableColumn fx:id="colActif" text="Actif" prefWidth="60"/>
+                        <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

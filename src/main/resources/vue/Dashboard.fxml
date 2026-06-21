@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controleur.TableauDeBordController"
+            styleClass="root" prefWidth="1300" prefHeight="800">
+
+    <top>
+        <HBox styleClass="menu-bar" alignment="CENTER_LEFT">
+            <MenuBar styleClass="menu-bar" HBox.hgrow="ALWAYS">
+                <Menu text="Gestion">
+                    <MenuItem text="Véhicules" onAction="#handleAllerVehicules"/>
+                    <MenuItem text="Lavages" onAction="#handleAllerLavages"/>
+                </Menu>
+                <Menu text="Statistiques">
+                    <MenuItem text="Tableau de bord" onAction="#handleAllerDashboard"/>
+                </Menu>
+                <Menu text="Aide">
+                    <MenuItem text="À propos" onAction="#handleAPropos"/>
+                </Menu>
+            </MenuBar>
+            <Button text="✕" styleClass="btn-quitter" onAction="#handleQuitter"/>
+        </HBox>
+    </top>
+
+    <center>
+        <BorderPane styleClass="root">
+
+            <top>
+                <HBox styleClass="dash-header" alignment="CENTER_LEFT" spacing="14">
+                    <padding>
+                        <Insets top="16" right="24" bottom="16" left="24"/>
+                    </padding>
+
+                    <StackPane styleClass="dash-logo-badge">
+                        <Label text="💧" style="-fx-font-size: 18px;"/>
+                    </StackPane>
+
+                    <VBox spacing="0">
+                        <Label text="WASHFLOW" styleClass="dash-brand"/>
+                        <Label text="Tableau de bord Statistiques" styleClass="dash-titre"/>
+                    </VBox>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <Label fx:id="dateActualisationLabel" text="Actualisé le —  ·  Station Principale"
+                           styleClass="dash-sous-info"/>
+
+                    <Button text="⬇ Exporter" styleClass="btn-exporter-dash" onAction="#handleExporterVehicules">
+                        <tooltip>
+                            <Tooltip text="Exporter les données véhicules en CSV"/>
+                        </tooltip>
+                    </Button>
+                </HBox>
+            </top>
+
+            <center>
+                <SplitPane dividerPositions="0.27">
+
+                    <ScrollPane fitToWidth="true" styleClass="root" hbarPolicy="NEVER">
+                        <VBox spacing="10" styleClass="dash-sidebar">
+                            <padding>
+                                <Insets top="18" right="14" bottom="18" left="14"/>
+                            </padding>
+
+                            <Label text="SECTIONS" styleClass="dash-sections-label"/>
+
+                            <ToggleButton fx:id="btnSectionKpis" styleClass="dash-nav-item" maxWidth="Infinity"
+                                          maxHeight="60" selected="true" onAction="#handleAfficherKpis">
+                                <graphic>
+                                    <VBox spacing="2">
+                                        <Label text="📈  KPIs Financiers" styleClass="dash-nav-titre"/>
+                                        <Label text="CA journalier, hebdo, mensuel et panier moyen avec répartition par service"
+                                               wrapText="true" styleClass="dash-nav-desc"/>
+                                    </VBox>
+                                </graphic>
+                            </ToggleButton>
+
+                            <ToggleButton fx:id="btnSectionOperationnel" styleClass="dash-nav-item" maxWidth="Infinity"
+                                          maxHeight="60" onAction="#handleAfficherOperationnel">
+                                <graphic>
+                                    <VBox spacing="2">
+                                        <Label text="🚗  Indicateurs Opérationnels" styleClass="dash-nav-titre"/>
+                                        <Label text="Véhicules lavés, temps moyen et taux d'occupation des baies"
+                                               wrapText="true" styleClass="dash-nav-desc"/>
+                                    </VBox>
+                                </graphic>
+                            </ToggleButton>
+
+                            <ToggleButton fx:id="btnSectionRepartition" styleClass="dash-nav-item" maxWidth="Infinity"
+                                          maxHeight="60" onAction="#handleAfficherRepartition">
+                                <graphic>
+                                    <VBox spacing="2">
+                                        <Label text="📊  Répartition des Lavages" styleClass="dash-nav-titre"/>
+                                        <Label text="Part de chaque formule (Premium, Complet, Basic) sur le mois en cours"
+                                               wrapText="true" styleClass="dash-nav-desc"/>
+                                    </VBox>
+                                </graphic>
+                            </ToggleButton>
+
+                            <ToggleButton fx:id="btnSectionEvolution" styleClass="dash-nav-item" maxWidth="Infinity"
+                                          maxHeight="60" onAction="#handleAfficherEvolution">
+                                <graphic>
+                                    <VBox spacing="2">
+                                        <Label text="🗂  Évolution Mensuelle" styleClass="dash-nav-titre"/>
+                                        <Label text="Nombre de lavages réalisés chaque mois sur les 12 derniers mois"
+                                               wrapText="true" styleClass="dash-nav-desc"/>
+                                    </VBox>
+                                </graphic>
+                            </ToggleButton>
+
+                            <ToggleButton fx:id="btnSectionExport" styleClass="dash-nav-item" maxWidth="Infinity"
+                                          maxHeight="60" onAction="#handleAfficherExport">
+                                <graphic>
+                                    <VBox spacing="2">
+                                        <Label text="🎨  Export &amp; Personnalisation" styleClass="dash-nav-titre"/>
+                                        <Label text="Export CSV des données et personnalisation de la couleur d'accent"
+                                               wrapText="true" styleClass="dash-nav-desc"/>
+                                    </VBox>
+                                </graphic>
+                            </ToggleButton>
+
+                        </VBox>
+                    </ScrollPane>
+
+                    <ScrollPane fitToWidth="true" styleClass="root">
+                        <VBox fx:id="contenuSectionBox" spacing="20">
+                            <padding>
+                                <Insets top="24" right="28" bottom="28" left="28"/>
+                            </padding>
+                        </VBox>
+                    </ScrollPane>
+
+                </SplitPane>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>
