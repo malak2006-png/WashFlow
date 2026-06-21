@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="controleur.LoginController"
+           styleClass="root" prefWidth="900" prefHeight="700">
+
+    <VBox alignment="CENTER" maxWidth="420" maxHeight="560" spacing="18" styleClass="carte-login">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <Label text="💧" style="-fx-font-size: 32px;"/>
+        <Label text="WashFlow" styleClass="titre-principal"/>
+        <Label text="Car Wash Management Platform" styleClass="sous-titre"/>
+
+        <VBox spacing="4" alignment="CENTER_LEFT">
+            <Label text="Welcome back" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Label text="Sign in to your workspace" styleClass="sous-titre"/>
+        </VBox>
+
+        <VBox spacing="6" alignment="CENTER_LEFT">
+            <Label text="USERNAME" styleClass="label-champ"/>
+            <TextField fx:id="usernameField" promptText="Enter your username">
+                <tooltip>
+                    <Tooltip text="Entrez votre nom d'utilisateur"/>
+                </tooltip>
+            </TextField>
+        </VBox>
+
+        <VBox spacing="6" alignment="CENTER_LEFT">
+            <Label text="PASSWORD" styleClass="label-champ"/>
+            <PasswordField fx:id="passwordField" promptText="Enter your password">
+                <tooltip>
+                    <Tooltip text="Entrez votre mot de passe"/>
+                </tooltip>
+            </PasswordField>
+        </VBox>
+
+        <Label fx:id="errorLabel" styleClass="message-erreur"/>
+
+        <Button text="Sign In  →" maxWidth="Infinity" styleClass="btn-connexion"
+                onAction="#handleLogin"/>
+
+        <Label text="© 2026 WashFlow. Enterprise car wash platform." styleClass="sous-titre"/>
+    </VBox>
+
+</StackPane>
