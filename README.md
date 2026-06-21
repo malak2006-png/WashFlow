@@ -111,7 +111,7 @@ Lien Google Drive : https://drive.google.com/file/d/1z7wAzlYVPFXtgUAbYDiew6p1KXY
 
 Binôme :
 
-Elyouncha Malak -- Elyoubi Chorouk
+El Youncha Malak -- El Youbi Chorouk
 
 
 — GI3 ENSAO — 2025/2026
